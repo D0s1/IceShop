@@ -3,6 +3,7 @@ package com.learning.iceshop;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,8 +21,9 @@ public class Readin {
     }
 
     @GetMapping
-    public List<String[]> getAllRecords() {
-        return csvData.getRecords();
+
+    public List<String[]> getAllRecords(@RequestParam(required = false) Integer scoreabove) {
+        return csvData.getRecordsAsString(scoreabove);
     }
 
     @GetMapping("/columnA")
@@ -30,7 +32,7 @@ public class Readin {
     }
 
     @GetMapping("/columnB")
-    public List<String> getColumnB() {
+    public List<Integer> getColumnB() {
         return csvData.getColumnB();
     }
 }
