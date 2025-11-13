@@ -3,7 +3,6 @@ package com.learning.iceshop;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -34,21 +33,17 @@ public class CsvData {
         }
     }
 
-    public List<String> getColumnA() {
-        return records.stream().map(IceDataset::getSorte).toList();
+    public List<String> getColumnA(CsvFilter filter) {
+        return filter.applyFilter(records).map(IceDataset::getSorte).toList();
     }
 
-    public List<Integer> getColumnB() {
-        return records.stream().map(IceDataset::getScore).toList();
+    public List<Integer> getColumnB(CsvFilter filter) {
+        return filter.applyFilter(records).map(IceDataset::getScore).toList();
     }
 
-    public List<String[]> getRecordsAsString(Integer scoreAbove) {
-        Stream<IceDataset> stream = getRecords().stream();
-        if (scoreAbove != null) {
-            stream = stream.filter(set -> set.getScore() > scoreAbove );
-        }
+    public List<String[]> getRecordsAsString(CsvFilter filter) {
         List<String[]> output = new ArrayList<>();
-        stream.forEach(elem -> output.add(new String[] {elem.getSorte(), String.valueOf(elem.getScore())}));
+        filter.applyFilter(records).forEach(elem -> output.add(new String[] {elem.getSorte(), String.valueOf(elem.getScore())}));
          return output;
     }
 }
