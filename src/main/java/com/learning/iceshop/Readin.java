@@ -20,11 +20,13 @@ public class Readin {
     @ModelAttribute
     public CsvFilter loadFilters(
             @RequestParam(required = false) Integer scoreabove,
-            @RequestParam(required = false) String user
+            @RequestParam(required = false) String user,
+            @RequestParam(required = false) String zutat
     ) {
         CsvFilter filter = new CsvFilter();
         if (scoreabove != null) {filter.setScoreabove(scoreabove);}
         if (user != null){filter.setSorte(user);}
+        if (zutat != null){filter.setZutat(zutat);}
         return filter;
     }
     @GetMapping

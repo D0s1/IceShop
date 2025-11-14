@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,7 +28,8 @@ public class CsvData {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] values = (line.split(","));
-                    records.add(new IceDataset(values[0], Integer.parseInt(values[1])));
+                    String[] zutaten = (values[2].split(";"));
+                    records.add(new IceDataset(values[0], Integer.parseInt(values[1]),zutaten));
                 }
             }
         }
@@ -43,7 +45,7 @@ public class CsvData {
 
     public List<String[]> getRecordsAsString(CsvFilter filter) {
         List<String[]> output = new ArrayList<>();
-        filter.applyFilter(records).forEach(elem -> output.add(new String[] {elem.getSorte(), String.valueOf(elem.getScore())}));
+        filter.applyFilter(records).forEach(elem -> output.add(new String[] {elem.getSorte(), String.valueOf(elem.getScore()), Arrays.toString(elem.getZutaten())}));
          return output;
     }
 }
