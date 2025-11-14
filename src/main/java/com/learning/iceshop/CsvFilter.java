@@ -19,7 +19,7 @@ public class CsvFilter {
         predicates.add(value -> value.getSorte().equals(sorte));
     }
     public void setZutat(String zutat) {
-        predicates.add(value -> Arrays.asList(value.getZutaten()).contains(zutat));
+        predicates.add(value -> (value.getZutaten()).contains(zutat));
     }
 
     public Predicate<IceDataset> buildPredicate() {

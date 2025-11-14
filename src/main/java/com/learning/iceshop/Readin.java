@@ -43,4 +43,15 @@ public class Readin {
     public List<Integer> getColumnB(@ModelAttribute CsvFilter filter) {
         return csvData.getColumnB(filter);
     }
+
+    @PatchMapping("/records/{id}/zutaten")
+    public IceDataset addZutat(
+            @PathVariable String id,
+            @RequestParam String zutat
+    ) {
+        IceDataset record = csvData.getRecords().stream().filter(elem -> elem.getSorte().equals(id)).findFirst().orElse(null);
+        assert record != null;
+        record.getZutaten().add(zutat);
+        return record;
+    }
 }

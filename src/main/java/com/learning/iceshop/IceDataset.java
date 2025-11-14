@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IceDataset {
     @Getter @Setter
@@ -11,11 +12,11 @@ public class IceDataset {
     @Getter @Setter
     private int score;
     @Getter @Setter
-    private String[] zutaten;
-    public IceDataset(String sorte, int score, String[] zutaten) {
+    private List<String> zutaten;
+    public IceDataset(String sorte, int score, List<String>  zutaten) {
         this.score = score;
         this.sorte = sorte;
-        this.zutaten = zutaten;
-
+        this.zutaten = new ArrayList<>(zutaten);
     }
+
 }
