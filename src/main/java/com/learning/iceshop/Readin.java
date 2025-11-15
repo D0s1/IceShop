@@ -12,7 +12,6 @@ public class Readin {
 
     private final CsvData csvData;
 
-    // Konstruktor-Injection: Spring injiziert die Bean automatisch
     public Readin(CsvData csvData) {
         this.csvData = csvData;
     }
@@ -20,13 +19,15 @@ public class Readin {
     @ModelAttribute
     public CsvFilter loadFilters(
             @RequestParam(required = false) Integer scoreabove,
-            @RequestParam(required = false) String user,
-            @RequestParam(required = false) String zutat
+            @RequestParam(required = false) String sorte,
+            @RequestParam(required = false) String zutat,
+            @RequestParam(required = false) Float pricebelow
     ) {
         CsvFilter filter = new CsvFilter();
         if (scoreabove != null) {filter.setScoreabove(scoreabove);}
-        if (user != null){filter.setSorte(user);}
+        if (sorte != null){filter.setSorte(sorte);}
         if (zutat != null){filter.setZutat(zutat);}
+        if (pricebelow != null){filter.setPriceBelow(pricebelow);}
         return filter;
     }
     @GetMapping

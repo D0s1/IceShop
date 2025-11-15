@@ -21,6 +21,9 @@ public class CsvFilter {
     public void setZutat(String zutat) {
         predicates.add(value -> (value.getZutaten()).contains(zutat));
     }
+    public void setPriceBelow(Float pricebelow) {
+        predicates.add(value -> (value.getPrice() < pricebelow));
+    }
 
     public Predicate<IceDataset> buildPredicate() {
         return predicates.stream()
@@ -31,4 +34,6 @@ public class CsvFilter {
         Predicate<IceDataset> combined = buildPredicate();
         return data.stream().filter(combined);
     }
+
+
 }

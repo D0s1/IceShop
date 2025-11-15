@@ -28,8 +28,8 @@ public class CsvData {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] values = (line.split(","));
-                    List<String> zutaten = List.of((values[2].split(";")));
-                    records.add(new IceDataset(values[0], Integer.parseInt(values[1]),zutaten));
+                    List<String> zutaten = List.of((values[3].split(";")));
+                    records.add(new IceDataset(values[0], Integer.parseInt(values[1]), Float.parseFloat(values[2]),zutaten));
                 }
             }
         }
@@ -45,7 +45,7 @@ public class CsvData {
 
     public List<String[]> getRecordsAsString(CsvFilter filter) {
         List<String[]> output = new ArrayList<>();
-        filter.applyFilter(records).forEach(elem -> output.add(new String[] {elem.getSorte(), String.valueOf(elem.getScore()), String.join(",",(elem.getZutaten()))}));
+        filter.applyFilter(records).forEach(elem -> output.add(new String[] {elem.getSorte(), String.valueOf(elem.getScore()), String.valueOf(elem.getPrice()), String.join(",",(elem.getZutaten()))}));
          return output;
     }
 }
