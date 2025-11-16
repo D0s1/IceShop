@@ -8,9 +8,11 @@ import java.util.stream.Stream;
 
 public class CsvFilter {
     List<Predicate<IceDataset>> predicates;
+
     public CsvFilter(){
         predicates = new ArrayList<>();
     }
+
     public void setScoreabove(Integer scoreabove) {
         predicates.add(value -> value.getScore() > scoreabove);
     }
@@ -18,9 +20,11 @@ public class CsvFilter {
     public void setSorte(String sorte) {
         predicates.add(value -> value.getSorte().equals(sorte));
     }
+
     public void setZutat(String zutat) {
         predicates.add(value -> (value.getZutaten()).contains(zutat));
     }
+
     public void setPriceBelow(Float pricebelow) {
         predicates.add(value -> (value.getPrice() < pricebelow));
     }

@@ -4,6 +4,7 @@ package com.learning.iceshop;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/records")
@@ -24,10 +25,10 @@ public class Readin {
             @RequestParam(required = false) Float pricebelow
     ) {
         CsvFilter filter = new CsvFilter();
-        if (scoreabove != null) {filter.setScoreabove(scoreabove);}
-        if (sorte != null){filter.setSorte(sorte);}
-        if (zutat != null){filter.setZutat(zutat);}
-        if (pricebelow != null){filter.setPriceBelow(pricebelow);}
+        Optional.ofNullable(scoreabove).ifPresent(filter::setScoreabove);
+        Optional.ofNullable(sorte).ifPresent(filter::setSorte);
+        Optional.ofNullable(zutat).ifPresent(filter::setZutat);
+        Optional.ofNullable(pricebelow).ifPresent(filter::setPriceBelow);
         return filter;
     }
     @GetMapping
