@@ -36,13 +36,13 @@ public class Readin {
         return csvData.getRecordsAsString(filter);
     }
 
-    @GetMapping("/columnA")
-    public List<String> getColumnA(@ModelAttribute CsvFilter filter) {
+    @GetMapping("/sorte")
+    public List<String> getSorte(@ModelAttribute CsvFilter filter) {
         return csvData.getColumnA(filter);
     }
 
-    @GetMapping("/columnB")
-    public List<Integer> getColumnB(@ModelAttribute CsvFilter filter) {
+    @GetMapping("/score")
+    public List<Integer> getScore(@ModelAttribute CsvFilter filter) {
         return csvData.getColumnB(filter);
     }
 
