@@ -11,9 +11,11 @@ import java.util.Optional;
 
 public class Readin {
 
+    private final IceSortRepository iceSortRepository;
     private final CsvData csvData;
 
-    public Readin(CsvData csvData) {
+    public Readin(IceSortRepository iceSortRepository, CsvData csvData) {
+        this.iceSortRepository = iceSortRepository;
         this.csvData = csvData;
     }
 
@@ -55,5 +57,20 @@ public class Readin {
         assert record != null;
         record.getZutaten().add(zutat);
         return record;
+    }
+    @GetMapping("/db")
+    public List<IceSort> getAllIceSOrt(){
+        return iceSortRepository.findAll();
+    }
+
+    @GetMapping("/scoreabove{id}")
+    public List<IceSort> getScoreAbove(@PathVariable int id){
+        return iceSortRepository.findByScoreGreaterThan(id);
+    }
+
+    @PostMapping("/add")
+    public IceSort addIceSort(@RequestBody IceSort iceSort) {
+        iceSort.setingredients(iceSort.getingredients());
+        return iceSortRepository.save(iceSort);
     }
 }
