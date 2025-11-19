@@ -1,10 +1,12 @@
 package com.learning.iceshop;
 
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/api/records")
@@ -19,20 +21,8 @@ public class Readin {
         this.csvData = csvData;
     }
 
-    @ModelAttribute
-    public CsvFilter loadFilters(
-            @RequestParam(required = false) Integer scoreabove,
-            @RequestParam(required = false) String sorte,
-            @RequestParam(required = false) String zutat,
-            @RequestParam(required = false) Float pricebelow
-    ) {
-        CsvFilter filter = new CsvFilter();
-        Optional.ofNullable(scoreabove).ifPresent(filter::setScoreabove);
-        Optional.ofNullable(sorte).ifPresent(filter::setSorte);
-        Optional.ofNullable(zutat).ifPresent(filter::setZutat);
-        Optional.ofNullable(pricebelow).ifPresent(filter::setPriceBelow);
-        return filter;
-    }
+
+
     @GetMapping
     public List<String[]> getAllRecords(@ModelAttribute CsvFilter filter) {
         return csvData.getRecordsAsString(filter);
@@ -59,13 +49,18 @@ public class Readin {
         return record;
     }
     @GetMapping("/db")
-    public List<IceSort> getAllIceSOrt(){
-        return iceSortRepository.findAll();
+    public List<IceSort> getAllIceSOrt(@ModelAttribute IceSortFilter filter){
+        return iceSortRepository.findAll(IceSortSpecs.buildSpec(filter));
     }
 
     @GetMapping("/scoreabove{id}")
     public List<IceSort> getScoreAbove(@PathVariable int id){
         return iceSortRepository.findByScoreGreaterThan(id);
+    }
+
+    @GetMapping("/filter/names")
+    public List<String> getNamesAboveScore(@RequestParam int score) {
+        return iceSortRepository.findIceSortsByScoreGreaterThan(score);
     }
 
     @PostMapping("/add")
