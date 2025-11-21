@@ -14,7 +14,7 @@ public class IceSort {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
-    private Long id;  // <-- Primärschlüssel muss numerisch sein
+    private Long id;
 
     @Getter @Setter
     private String iceSort;
@@ -23,11 +23,11 @@ public class IceSort {
     private int score;
 
     @Column(columnDefinition = "JSON")
-    private String ingredients; // <-- JSON als String speichern
-
+    private String ingredients;
     public List<String> getingredients() {
         try {
-            return new ObjectMapper().readValue(this.ingredients, new TypeReference<List<String>>() {});
+            return new ObjectMapper().readValue(this.ingredients, new TypeReference<>() {
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
