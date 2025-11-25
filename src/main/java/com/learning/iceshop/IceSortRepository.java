@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface IceSortRepository extends JpaRepository<IceSort, Long>,
         JpaSpecificationExecutor<IceSort> {
-    List<IceSort> findByScoreGreaterThan(int score);
     @Query("SELECT i.iceSort FROM IceSort i WHERE i.score > :score")
     List<String> findIceSortsByScoreGreaterThan(@Param("score") int score);
 }
